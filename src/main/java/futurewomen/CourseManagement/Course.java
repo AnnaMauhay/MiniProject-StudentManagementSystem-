@@ -10,9 +10,41 @@ public class Course implements Serializable {
     private int courseID;
     private String name;
 
+    private int units = 3;
+
     public Course(int courseID, String name) {
         this.courseID = courseID;
         this.name = name;
+    }
+
+    public Course(int courseID, String name, int units) {
+        this.courseID = courseID;
+        this.name = name;
+        this.units = units;
+    }
+
+    public int getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getUnits() {
+        return units;
+    }
+
+    public void setUnits(int units) {
+        this.units = units;
     }
 
     @Override

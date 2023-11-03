@@ -1,5 +1,6 @@
 package futurewomen;
 
+import futurewomen.CourseManagement.CourseManagement;
 import futurewomen.StudentInformationManagement.StudentManagement;
 import futurewomen.UserManagement.UserManagement;
 
@@ -61,36 +62,57 @@ public class MainStudentManagementApp {
 
     private void courseManagement() {
         System.out.println("Course Management");
-    }
-
-    private void studentManagement() {
-        System.out.println("Student Management");
-        StudentManagement.deserializeStudentsList();
-        StudentManagement.deserializeOfferedCourses();
+        CourseManagement.deserializeOfferedCourses();
         Scanner input = new Scanner(System.in);
         boolean wantsBack = false;
         while (!wantsBack) {
             System.out.println("""
                     Please select the number of your choice:
                     1 - View Offered Courses
-                    2 - View All Students
-                    3 - Back
+                    2 - Back
                     """);
             try {
                 int selection = input.nextInt();
                 input.nextLine();
                 switch (selection) {
                     case 1:
-                        StudentManagement.displayOfferedCourses();
+                        CourseManagement.displayOfferedCourses();
                         break;
+                    //TODO: implement UI for Course CRUD
                     case 2:
+                        wantsBack=true;
+                        CourseManagement.serializeOfferedCourses();
+                        break;
+                }
+                input.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter integers only.");
+            }
+        }
+    }
+
+    private void studentManagement() {
+        System.out.println("Student Management");
+        StudentManagement.deserializeStudentsList();
+        Scanner input = new Scanner(System.in);
+        boolean wantsBack = false;
+        while (!wantsBack) {
+            System.out.println("""
+                    Please select the number of your choice:
+                    1 - View All Students
+                    2 - Back
+                    """);
+            try {
+                int selection = input.nextInt();
+                input.nextLine();
+                switch (selection) {
+                    case 1:
                         StudentManagement.displayStudents();
                         break;
-                        //TODO: implement UI for Student and Course CRUD
-                    case 3:
+                        //TODO: implement UI for Student CRUD
+                    case 2:
                         wantsBack=true;
                         StudentManagement.serializeStudentsList();
-                        StudentManagement.serializeOfferedCourses();
                         break;
                 }
                 input.nextLine();
