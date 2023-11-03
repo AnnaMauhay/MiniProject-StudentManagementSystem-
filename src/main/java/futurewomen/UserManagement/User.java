@@ -18,6 +18,11 @@ public class User implements Serializable {
         this.userName = userName;
         this.password = password;
     }
+    protected User(String name, String userName, String password) {
+        this.name = name;
+        this.userName = userName;
+        this.password = password;
+    }
 
     protected String getPassword() {
         return password;
