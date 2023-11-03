@@ -6,4 +6,5 @@ public class Constants {
             === Student Management System ===
             =================================
             """;
+    public static final String DESTINATION_SERIALIZED_OBJ = "src/main/resources/SerializedObj/";
 }
