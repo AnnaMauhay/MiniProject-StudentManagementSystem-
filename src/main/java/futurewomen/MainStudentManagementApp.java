@@ -1,13 +1,15 @@
 package futurewomen;
 
+import futurewomen.StudentInformationManagement.StudentManagement;
 import futurewomen.UserManagement.UserManagement;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static futurewomen.Utils.Constants.APP_HEADER;
+import static futurewomen.Utils.Constants.SERIALIZED_USER_LIST;
 
-public class StudentManagementSystem {
+public class MainStudentManagementApp {
     boolean isLoggedIn = false;
     boolean quit = false;
 
@@ -63,9 +65,44 @@ public class StudentManagementSystem {
 
     private void studentManagement() {
         System.out.println("Student Management");
+        StudentManagement.deserializeStudentsList();
+        StudentManagement.deserializeOfferedCourses();
+        Scanner input = new Scanner(System.in);
+        boolean wantsBack = false;
+        while (!wantsBack) {
+            System.out.println("""
+                    Please select the number of your choice:
+                    1 - View Offered Courses
+                    2 - View All Students
+                    3 - Back
+                    """);
+            try {
+                int selection = input.nextInt();
+                input.nextLine();
+                switch (selection) {
+                    case 1:
+                        StudentManagement.displayOfferedCourses();
+                        break;
+                    case 2:
+                        StudentManagement.displayStudents();
+                        break;
+                        //TODO: implement UI for Student and Course CRUD
+                    case 3:
+                        wantsBack=true;
+                        StudentManagement.serializeStudentsList();
+                        StudentManagement.serializeOfferedCourses();
+                        break;
+                }
+                input.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter integers only.");
+            }
+        }
     }
 
     private void displayUserManagementUI() {
+        UserManagement.readUsersFromFile(SERIALIZED_USER_LIST);
+
         Scanner input = new Scanner(System.in);
         boolean wantsBack = false;
         while (!isLoggedIn && !wantsBack) {
@@ -73,7 +110,8 @@ public class StudentManagementSystem {
                     Please select the number of your choice:
                     1 - Login
                     2 - Register as new User
-                    3 - Back
+                    3 - Display Users
+                    4 - Back
                     """);
             try {
                 int selection = input.nextInt();
@@ -86,11 +124,17 @@ public class StudentManagementSystem {
                         displayRegistrationUI();
                         break;
                     case 3:
+                        UserManagement.displayUsers();
+                        break;
+                        //TODO: Implement UI for User Management Update and Delete
+                    case 4:
                         wantsBack=true;
+                        UserManagement.saveUsersToFile(SERIALIZED_USER_LIST);
                         break;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Please enter integers only.");
+                input.nextLine();
             }
         }
     }

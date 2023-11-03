@@ -87,24 +87,22 @@ public class UserManagement {
          try (ObjectOutputStream outObj = new ObjectOutputStream(
                  new FileOutputStream(path.toFile()))) {
              outObj.writeObject(userList);
-             System.out.println("User list serialized successfully.");
+             System.out.println("...User list serialized successfully.\n");
          } catch (IOException e) {
              System.out.println("User serialization failed. " + e.getMessage());
          }
      }
 
-     public static ArrayList<User> readUsersFromFile(String fileName){
+     public static void readUsersFromFile(String fileName){
          Path path = Path.of(DESTINATION_SERIALIZED_OBJ + fileName);
          try (ObjectInputStream in = new ObjectInputStream(
                  new FileInputStream(path.toFile()))) {
-             ArrayList<User> loadedUserList = (ArrayList<User>) in.readObject();
-             System.out.println("User list deserialized successfully.");
-             return loadedUserList;
+             userList = (ArrayList<User>) in.readObject();
+             System.out.println("...User list deserialized successfully.\n");
 
          } catch (IOException | ClassNotFoundException e) {
              System.out.println("User deserialization failed. " + e.getMessage());
          }
-         return null;
      }
 
 }
